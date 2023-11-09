@@ -48,26 +48,45 @@ You Can find the [Video Demo for App and Deployment](https://vimeo.com/882851798
 - Launch EC2 Instance using Amazon AMI
 - ```sudo su -```
 - Install node:20  
-  ```curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash```   
-  ```. ~/.nvm/nvm.sh```  
-  ```nvm install 20```
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash   
+. ~/.nvm/nvm.sh  
+nvm install 20
+```
 - Install nginx and git   
-  ```yum update          ```   
-  ```yum install nginx -y ```  
-  ```yum install git -y``` 
+```
+yum update             
+yum install nginx -y  
+yum install git -y
+``` 
 - Install pm2
   ```npm i -g pm2```
 - Clone git repo
 - Add .env file to root of the project with two variables  
-  ``` DATABASE_URL=??, PORT=8080 ```
+```
+DATABASE_URL=?? 
+PORT=8080
+```
 - Run Following commands
-  - ```cd into/Project/root```
-  - ```npm i```
-  - ```npx prisma generate```
-  - ```npm run build``` 
-  - ```pm2 start 'dist/app.js'```
+```
+cd into/Project/root
+npm i
+npx prisma generate
+npm run build 
+pm2 start 'dist/app.js'
+```
 - Reverse proxy
-  - ```cd /etc/nginx/conf.d```
-  - ```nano default.conf```
-  - paste ```server { listen 80; location / { proxy_pass http://localhost:8080/; } } ```
+```
+cd /etc/nginx/conf.d
+nano default.conf
+```
+  - Add paste following 
+  ```
+  server { 
+    listen 80; 
+    location / { 
+      proxy_pass http://localhost:8080/; 
+    } 
+  } 
+  ```
   - save and restart nginx ```systemctl restart nginx```
