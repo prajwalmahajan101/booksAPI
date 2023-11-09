@@ -9,8 +9,8 @@ const main = async () => {
 
 	// Log Https Requests
 	app.use((req, res, next) => {
-		const { path } = req;
-		httpLogger.http(`Request for ${path}`);
+		const { path, method } = req;
+		httpLogger.http(`Request for ${method.toLocaleUpperCase()}:${path}`);
 		next();
 	});
 
