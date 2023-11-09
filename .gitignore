@@ -131,3 +131,4 @@ dist
 
 
 deploy
+package-lock.json
