@@ -1,11 +1,13 @@
 # BooksAPI
-Books API for Managing Books
-
+Books API for Managing Books  
+You Can find [Hosted Demo App](http://54.66.167.82)  
+You Can find the [Video Demo for App and Deployment](https://vimeo.com/882851798?share=copy#t=0) 
 ## **Tech Stack :**  
 - NodeJs
 - Express  
 - Prisma (ORM)
 - MongoDB (Atlas)
+  
 ## **API Doc :**
 
 ### ***Create Book Record***:
