@@ -41,3 +41,29 @@ Books API for Managing Books
 - Path: /v1/books/:id
 - params:
   - **id**: ObjectId for the Book 
+
+## **Deployment on AWS - EC2 :**
+- Launch EC2 Instance using Ubuntu AMI
+- Install node:20 
+  ```sudo snap install node --classic```
+- Install nginx   
+  ``` sudo apt update          ```   
+  ```sudo apt install nginx -y ``` 
+- Install pm2
+  ```npm i -g pm2```
+- Clone git repo
+- Add .env file to root of the project with two variables  
+  ``` DATABASE_URL, PORT=8000 ```
+- Run Following commands
+  - ```cd into/Project/root```
+  - ```npm i```
+  - ```npx prisma generate```
+  - ```npm run build``` 
+  - ```pm2 start 'npm run start'```
+- Reverse proxy
+  - ```cd /etc/nginx/enabled-sites```
+  - ```sudo nano default```
+  - change in location / block
+  - comment the try and replace
+  - ```proxy_pass http://api:8000/;```
+  - save and restart nginx ```sudo systemctl restart nginx```
