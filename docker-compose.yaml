@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        env_file:
+            - ./dev.env
+        ports:
+            - 8080:8080
+        volumes:
+            - modules:/app/node_modules
+            - build:/app/dist
+volumes:
+    modules:
+    build:
