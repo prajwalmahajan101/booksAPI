@@ -1,7 +1,17 @@
 # BooksAPI
 Books API for Managing Books  
 You Can find [Hosted Demo App](http://54.66.167.82)
-You Can find the [Video Demo for App and Deployment](https://vimeo.com/882851798?share=copy#t=0) 
+You Can find the [Video Demo for App and Deployment](https://vimeo.com/882851798?share=copy#t=0)
+## **Branch :**
+- master
+- features:
+  - basic-app
+  - dockerized-app (create a docker container)
+  - pagination-fetch-all-books (pagination added to fetch all books)
+  - dockerized-pagination
+- release:
+  - prod:
+    - 10/11/2023 (backup of hosted branch)
 ## **Tech Stack :**  
 - NodeJs
 - Express  
