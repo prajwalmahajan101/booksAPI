@@ -2,23 +2,57 @@ import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
 
 import Book from '../../models/Book';
-import { IBook } from '../../interfaces/Book';
+import { IBook, IBookWithId } from '../../interfaces/Book';
 import CustomError from '../../utils/CustomError';
+import { LIMIT_FETCH_ALL_BOOKS } from '../../utils/Constants';
 
 export const getAllBooks = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
-	const books = await Book.findAll();
-
-	return res.status(200).json({
-		status: true,
-		message: 'Successfully Fetched List of Books',
-		data: {
-			books,
-		},
-	});
+	try {
+		const { page, limit } = req.query;
+		const pageSchema = Joi.number()
+			.integer()
+			.min(1)
+			.optional()
+			.default(1)
+			.label('Page');
+		const limitSchema = Joi.number()
+			.integer()
+			.min(1)
+			.optional()
+			.default(LIMIT_FETCH_ALL_BOOKS)
+			.label('Limit');
+		const validPage = await pageSchema.validateAsync(page);
+		const validLimit = await limitSchema.validateAsync(limit);
+		const count = await Book.getCount();
+		const totalPage: number = Math.ceil(count / validLimit);
+		const previous: boolean = validPage !== 1 && count !== 0;
+		const next: boolean = validPage < totalPage;
+		let books: IBookWithId[] = [];
+		if (validPage <= totalPage) {
+			books = await Book.findAll(validPage, validLimit);
+		}
+		return res.status(200).json({
+			status: true,
+			message: 'Successfully Fetched List of Books',
+			data: {
+				totalPage,
+				totalCount: count,
+				currentPage: validPage,
+				books,
+				previous,
+				next,
+			},
+		});
+	} catch (err: any) {
+		if (err._original) {
+			next(new CustomError(err.message, 400));
+		}
+		next(err);
+	}
 };
 
 export const createBook = async (

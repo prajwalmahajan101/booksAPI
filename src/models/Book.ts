@@ -13,8 +13,11 @@ const Book = {
 		logger.info(`Created new Record of Book with id ${book.id}`);
 		return book;
 	},
-	findAll: async (): Promise<IBookWithId[]> => {
-		let books = await db.book.findMany({});
+	findAll: async (page: number, limit: number): Promise<IBookWithId[]> => {
+		let books = await db.book.findMany({
+			skip: (page - 1) * limit,
+			take: limit,
+		});
 		logger.info('Fetched All Records of Book');
 		return books;
 	},
@@ -63,6 +66,10 @@ const Book = {
 			},
 		});
 		logger.info(`Deleted Record of Book with id ${id}`);
+	},
+	getCount: async (): Promise<number> => {
+		let count: number = await db.book.count({});
+		return count;
 	},
 };
 
