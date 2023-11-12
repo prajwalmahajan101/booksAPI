@@ -132,3 +132,5 @@ dist
 
 deploy
 package-lock.json
+
+dev.env
